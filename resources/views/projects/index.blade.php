@@ -1,5 +1,15 @@
 @extends('app')
 
 @section('content')
-    This is my /resources/views/projects/index.blade.php file!
+    <h2>Projects</h2>
+
+    @if ( !$projects->count() )
+        You have no projects
+    @else
+        <ul>
+            @foreach( $projects as $project )
+                <li><a href="{{ route('projects.show', $project->slug) }}">{{ $project->name }}</a></li>
+            @endforeach
+        </ul>
+    @endif
 @endsection
