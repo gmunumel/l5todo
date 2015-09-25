@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use App\Project;
 use App\Task;
 
 class TasksController extends Controller
@@ -12,9 +13,10 @@ class TasksController extends Controller
     /**
      * Display a listing of the resource.
      *
+     * @param Project @project
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Project $project)
     {
         return view('tasks.index', compact('project'));
     }
@@ -22,9 +24,10 @@ class TasksController extends Controller
     /**
      * Show the form for creating a new resource.
      *
+     * @param Project @project
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Project $project)
     {
         return view('tasks.create', compact('project'));
     }
@@ -32,10 +35,10 @@ class TasksController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  Project $project
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Project $project)
     {
         //
     }
@@ -43,10 +46,11 @@ class TasksController extends Controller
     /**
      * Display the specified resource.
      *
+     * @param  Project $project
      * @param  Task $task
      * @return \Illuminate\Http\Response
      */
-    public function show($task)
+    public function show(Project $project, Task $task)
     {
         return view('tasks.show', compact('project', 'task'));
     }
@@ -54,10 +58,11 @@ class TasksController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
+     * @param  Project $project
      * @param  Task $task
      * @return \Illuminate\Http\Response
      */
-    public function edit($task)
+    public function edit(Project $project, Task $task)
     {
         return view('tasks.edit', compact('project', 'task'));
     }
@@ -65,11 +70,11 @@ class TasksController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  Project $project
      * @param  Task $task
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $task)
+    public function update(Project $project, Task $task)
     {
         //
     }
@@ -77,10 +82,11 @@ class TasksController extends Controller
     /**
      * Remove the specified resource from storage.
      *
+     * @param  Project $project
      * @param  Task $task
      * @return \Illuminate\Http\Response
      */
-    public function destroy($task)
+    public function destroy(Project $project, Task $task)
     {
         //
     }
