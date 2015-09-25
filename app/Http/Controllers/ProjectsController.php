@@ -15,7 +15,7 @@ class ProjectsController extends Controller
      */
     public function index()
     {
-        //
+        return view('projects.index');
     }
 
     /**
@@ -25,7 +25,7 @@ class ProjectsController extends Controller
      */
     public function create()
     {
-        //
+        return view('projects.create');
     }
 
     /**

@@ -137,6 +137,9 @@ return [
         Illuminate\Validation\ValidationServiceProvider::class,
         Illuminate\View\ViewServiceProvider::class,
 
+        // Added by gm
+        Illuminate\Html\HtmlServiceProvider::class,
+
         /*
          * Application Service Providers...
          */
@@ -194,6 +197,9 @@ return [
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View'      => Illuminate\Support\Facades\View::class,
 
+        // Added by me
+        'Form'      => Illuminate\Html\FormFacade::class,
+        'HTML'      => Illuminate\Html\HtmlFacade::class,
     ],
 
 ];
