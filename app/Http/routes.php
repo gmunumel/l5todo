@@ -11,10 +11,6 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
-
 // Provide controller methods with object instead of ID
 Route::model('tasks', 'Task');
 Route::model('projects', 'Project');
@@ -29,3 +25,11 @@ Route::bind('projects', function($value, $route) {
 
 Route::resource('projects', 'ProjectsController');
 Route::resource('projects.tasks', 'TasksController');
+
+Route::get('/', 'WelcomeController@index');
+
+// Routes contact
+Route::get('contact', 'WelcomeController@contact');
+
+// Routes about
+Route::get('about', 'PagesController@about');
