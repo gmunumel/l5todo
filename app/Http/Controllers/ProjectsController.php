@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use App\Http\Requests;
-use App\Http\Controllers\Controller;
+use Input;
+use Redirect;
 use App\Project;
+use App\Http\Requests;
+//use Illuminate\Http\Requests;
+//use App\Http\Controllers\Controller;
 
 class ProjectsController extends Controller
 {
@@ -33,12 +35,14 @@ class ProjectsController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store()
     {
-        //
+        $input = Input::all();
+        Project::create( $input );
+
+        return Redirect::route('projects.index')->with('message', 'Project created');
     }
 
     /**
@@ -47,7 +51,7 @@ class ProjectsController extends Controller
      * @param  Project $project
      * @return \Illuminate\Http\Response
      */
-    public function show($project)
+    public function show(Project $project)
     {
         return view('projects.show', compact('project'));
     }
@@ -66,13 +70,15 @@ class ProjectsController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @param  Project $project
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $project)
+    public function update(Project $project)
     {
-        //
+        $input = array_except(Input::all(), '_method');
+        $project->update($input);
+
+        return Redirect::route('projects.show', $project->slug)->with('message', 'Project updated.');
     }
 
     /**
@@ -81,8 +87,10 @@ class ProjectsController extends Controller
      * @param  Project $project
      * @return \Illuminate\Http\Response
      */
-    public function destroy($project)
+    public function destroy(Project $project)
     {
-        //
+        $project->delete();
+
+        return Redirect::route('projects.index')->with('message', 'Project deleted.');
     }
 }

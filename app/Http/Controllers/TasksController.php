@@ -2,18 +2,20 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use App\Http\Requests;
-use App\Http\Controllers\Controller;
-use App\Project;
+use Input;
+use Redirect;
 use App\Task;
+use App\Project;
+//use Illuminate\Http\Requests;
+//use App\Http\Requests;
+//use App\Http\Controllers\Controller;
 
 class TasksController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
-     * @param Project @project
+     * @param \App\Project $project
      * @return \Illuminate\Http\Response
      */
     public function index(Project $project)
@@ -24,7 +26,7 @@ class TasksController extends Controller
     /**
      * Show the form for creating a new resource.
      *
-     * @param Project @project
+     * @param \App\Project $project
      * @return \Illuminate\Http\Response
      */
     public function create(Project $project)
@@ -35,19 +37,23 @@ class TasksController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  Project $project
+     * @param  \App\Project $project
      * @return \Illuminate\Http\Response
      */
     public function store(Project $project)
     {
-        //
+        $input = Input::all();
+        $input['project_id'] = $project->id;
+        Task::create( $input );
+
+        return Redirect::route('projects.show', $project->slug)->with('message', 'Task created.');
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  Project $project
-     * @param  Task $task
+     * @param  \App\Project $project
+     * @param  \App\Task $task
      * @return \Illuminate\Http\Response
      */
     public function show(Project $project, Task $task)
@@ -58,8 +64,8 @@ class TasksController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  Project $project
-     * @param  Task $task
+     * @param  \App\Project $project
+     * @param  \App\Task $task
      * @return \Illuminate\Http\Response
      */
     public function edit(Project $project, Task $task)
@@ -70,24 +76,29 @@ class TasksController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  Project $project
-     * @param  Task $task
+     * @param  \App\Project $project
+     * @param  \App\Task $task
      * @return \Illuminate\Http\Response
      */
     public function update(Project $project, Task $task)
     {
-        //
+        $input = array_except(Input::all(), '_method');
+        $task->update($input);
+
+        return Redirect::route('projects.tasks.show', [$project->slug, $task->slug])->with('message', 'Task updated.');
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  Project $project
-     * @param  Task $task
+     * @param  \App\Project $project
+     * @param  \App\Task $task
      * @return \Illuminate\Http\Response
      */
     public function destroy(Project $project, Task $task)
     {
-        //
+        $task->delete();
+
+        return Redirect::route('projects.show', $project->slug)->with('message', 'Task deleted.');
     }
 }
