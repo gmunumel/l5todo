@@ -3,9 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Article;
-use Carbon\Carbon;
-use App\Http\Controllers\Controller;
-use App\Http\Requests\CreateArticleRequest;
+//use Carbon\Carbon;
+use Illuminate\Http\Request;
+//use App\Http\Controllers\Controller;
+use App\Http\Requests\ArticleRequest;
+use Illuminate\Http\Response;
 
 /**
  * Class ArticlesController
@@ -17,7 +19,7 @@ class ArticlesController extends Controller
     /**
      * Controller the index for Articles
      *
-     * @return Response
+     * @return \Illuminate\View\View
      */
     public function index() {
 
@@ -35,7 +37,7 @@ class ArticlesController extends Controller
      * Controller to show the Article
      *
      * @param $id
-     * @return Response
+     * @return \Illuminate\View\View
      */
     public function show($id) {
 
@@ -57,7 +59,7 @@ class ArticlesController extends Controller
     /**
      * Controller to display the form
      *
-     * @return Response
+     * @return \Illuminate\View\View
      */
     public function create() {
 
@@ -67,10 +69,10 @@ class ArticlesController extends Controller
     /**
      * Controller to save an Article Object
      *
-     * @param CreateArticleRequest $request
+     * @param ArticleRequest $request
      * @return Response
      */
-    public function store(CreateArticleRequest $request) {
+    public function store(ArticleRequest $request) {
 
         //$input = Request::all();
 
@@ -86,6 +88,36 @@ class ArticlesController extends Controller
 
         // with validations
         Article::create($request->all());
+
+        return redirect('articles');
+    }
+
+    /**
+     * Controller for edit an Article
+     *
+     * @param $id
+     * @return \Illuminate\View\View
+     */
+    public function edit($id) {
+
+        $article = Article::findOrFail($id);
+
+        return view('articles.edit', compact('article'));
+
+    }
+
+    /**
+     * Controller for update an Article
+     *
+     * @param $id
+     * @param ArticleRequest $request
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     */
+    public function update($id, ArticleRequest $request) {
+
+        $article = Article::findOrFail($id);
+
+        $article->update($request->all());
 
         return redirect('articles');
     }
