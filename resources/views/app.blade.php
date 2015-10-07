@@ -3,6 +3,8 @@
 <html>
     <head>
         <title>App Name - @yield('title')</title>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+
     </head>
     <body>
         @section('sidebar')
@@ -16,14 +18,16 @@
                 </div>
             @endif
             @if ($errors->any())
-                <div class='flash alert-danger'>
+                <ul class='alert alert-danger'>
                     @foreach ( $errors->all() as $error )
                         <p>{{ $error }}</p>
                     @endforeach
-                </div>
+                </ul>
             @endif
 
             @yield('content')
         </div>
+
+        @yield('footer')
     </body>
 </html>

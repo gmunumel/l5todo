@@ -29,7 +29,23 @@ Route::resource('projects.tasks', 'TasksController');
 Route::get('/', 'WelcomeController@index');
 
 // Routes contact
-Route::get('contact', 'WelcomeController@contact');
+Route::get('contact', 'PagesController@contact');
 
 // Routes about
 Route::get('about', 'PagesController@about');
+
+// API approach
+Route::get('foo', function () {
+    return 'Bar';
+});
+
+// Routes for Articles
+Route::get('articles', 'ArticlesController@index');
+
+Route::get('articles/create', 'ArticlesController@create');
+
+Route::get('articles/{id}', 'ArticlesController@show');
+
+Route::post('articles', 'ArticlesController@store');
+
+Route::get('articles/{id}/edit', 'ArticlesController@edit');
