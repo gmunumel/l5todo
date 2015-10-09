@@ -2,12 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use Auth;
 use App\Article;
 //use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 //use App\Http\Controllers\Controller;
 use App\Http\Requests\ArticleRequest;
-use Illuminate\Http\Response;
 
 /**
  * Class ArticlesController
@@ -22,6 +23,9 @@ class ArticlesController extends Controller
      * @return \Illuminate\View\View
      */
     public function index() {
+
+        // See person who is currently sign in
+        //return \Auth::user();
 
         $articles = Article::latest('published_at')->published()->get();
 
@@ -87,7 +91,13 @@ class ArticlesController extends Controller
         //Article::create($input);
 
         // with validations
-        Article::create($request->all());
+        //Article::create($request->all());
+
+        $article = new Article($request->all());
+
+        // using authentification
+        // Auth::user()->articles; //Collection
+        Auth::user()->articles()->save($article);
 
         return redirect('articles');
     }

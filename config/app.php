@@ -139,6 +139,7 @@ return [
 
         // Added by gm
         Illuminate\Html\HtmlServiceProvider::class,
+        Bestmomo\Scafold\ScafoldServiceProvider::class,
 
         /*
          * Application Service Providers...
